@@ -45,6 +45,8 @@ class Adder(Form, Base):
         self.items = []
         self.addItems()
         
+        appUsageApp.updateDatabase('AddMaterialIds')
+        
     def showMessage(self, **kwargs):
         return msgBox.showMessage(self, title='Add Material IDs', **kwargs)
         
