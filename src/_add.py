@@ -51,14 +51,18 @@ class Adder(Form, Base):
         return msgBox.showMessage(self, title='Add Material IDs', **kwargs)
         
     def getAllMaterials(self):
-        return pc.ls(type=[pc.nt.RedshiftArchitectural, pc.nt.RedshiftSubSurfaceScatter], sl=True)
+        try:
+            return pc.ls(type=[pc.nt.RedshiftArchitectural, pc.nt.RedshiftSubSurfaceScatter], sl=True)
+        except AttributeError:
+            self.showMessage(msg="It seems like Redshift is not loaded or installed",
+                             icon=QMessageBox.Information)
         
     def addItems(self):
         materials = self.getAllMaterials()
         if not materials:
             self.showMessage(msg='No Redshift material found in the selection',
                              icon=QMessageBox.Information)
-        
+            return
         for mtl in materials:
             sg = getSGNode(mtl)
             if sg:
