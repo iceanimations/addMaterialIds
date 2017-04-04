@@ -52,7 +52,10 @@ class Adder(Form, Base):
         
     def getAllMaterials(self):
         try:
-            return pc.ls(type=[pc.nt.RedshiftArchitectural, pc.nt.RedshiftSubSurfaceScatter], sl=True)
+            old_mtls = pc.ls(type=[pc.nt.RedshiftArchitectural,
+                pc.nt.RedshiftSubSurfaceScatter], sl=True)
+            new_mtls = pc.ls(type='RedshiftMaterial', sl=True)
+            return old_mtls + new_mtls
         except AttributeError:
             self.showMessage(msg="It seems like Redshift is not loaded or installed",
                              icon=QMessageBox.Information)
